@@ -1,5 +1,5 @@
 """
-api URL Configuration
+rest URL Configuration
 
 The `urlpatterns` list routes URLs to views. For more information please see:
     https://docs.djangoproject.com/en/4.0/topics/http/urls/
@@ -22,5 +22,5 @@ from rest_framework_swagger.views import get_swagger_view
 urlpatterns = [
     path("admin", admin.site.urls),
     path("docs", get_swagger_view(title="API"), name="docs"),
-    path("users/", include("api.apps.users.urls")),
+    path("auth/", include("rest.app.user.urls")),
 ]
