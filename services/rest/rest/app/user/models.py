@@ -1,7 +1,7 @@
 from uuid import uuid4
 
 from django.contrib.auth.models import AbstractUser, BaseUserManager
-from django.db.models import EmailField, UUIDField
+from django.db.models import CharField, EmailField, UUIDField
 from django.utils.translation import gettext_lazy as _
 
 
@@ -58,6 +58,8 @@ class User(AbstractUser):
 
     username = None
     email = EmailField(_("email address"), unique=True)
+    first_name = CharField(_("first name"), max_length=150)
+    last_name = CharField(_("last name"), max_length=150)
     public_id = UUIDField(default=uuid4, unique=True)
 
     objects = UserManager()
