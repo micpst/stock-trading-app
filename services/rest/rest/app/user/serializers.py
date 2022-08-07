@@ -23,6 +23,9 @@ class UserRegisterSerializer(ModelSerializer):
             "tokens",
         )
         extra_kwargs = {
+            "email": {"write_only": True},
+            "first_name": {"write_only": True},
+            "last_name": {"write_only": True},
             "password": {"write_only": True},
         }
 
