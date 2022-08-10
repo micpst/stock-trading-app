@@ -1,0 +1,51 @@
+name: CI/CD Workflow
+
+on:
+  push:
+    branches:
+      - master
+      - develop
+
+  pull_request:
+    branches:
+      - master
+      - develop
+
+jobs:
+  health-check:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Get changed files
+        uses: dorny/paths-filter@v2
+        id: filter
+        with:
+          list-files: shell
+          filters: |
+            python:  
+              - added|modified: "services/rest/**/*.py"
+
+      - name: Set up Python 3.10
+        if: ${{ steps.filter.outputs.python == 'true' }}
+        uses: actions/setup-python@v4
+        with:
+          python-version: 3.10.0
+          architecture: x64
+          cache: 'pip'
+
+      - name: Install dependencies
+        if: ${{ steps.filter.outputs.python == 'true' }}
+        working-directory: services/rest
+        run: pip install -r requirements-dev.txt
+
+      - name: Run flake8
+        if: ${{ steps.filter.outputs.python == 'true' }}
+        working-directory: services/rest
+        run: flake8
+
+      - name: Run tests
+        if: ${{ steps.filter.outputs.python == 'true' }}
+        working-directory: services/rest
+        run: python manage.py test
