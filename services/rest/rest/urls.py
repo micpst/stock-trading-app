@@ -26,4 +26,5 @@ urlpatterns = [
     path("admin", admin.site.urls),
     path("rest/docs", schema_view.with_ui("swagger", cache_timeout=0), name="docs"),
     path("rest/auth/", include("rest.app.user.urls")),
+    path("rest/stocks", include("rest.app.stock.urls")),
 ]

@@ -27,6 +27,8 @@ DEBUG = True
 
 ALLOWED_HOSTS = []
 
+APPEND_SLASH = False
+
 
 # Application definition
 
@@ -39,6 +41,7 @@ INSTALLED_APPS = [
     "django.contrib.staticfiles",
     "drf_yasg",
     "rest_framework",
+    "rest.app.stock",
     "rest.app.user",
 ]
 
