@@ -17,3 +17,6 @@ class Stock(Model):
 
     class Meta:
         db_table = "tbl_stock"
+
+    def __str__(self) -> str:
+        return self.ticker
