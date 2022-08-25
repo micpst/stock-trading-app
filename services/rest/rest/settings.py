@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     "drf_yasg",
     "rest_framework",
     "rest.app.stock",
+    "rest.app.ticker",
     "rest.app.user",
 ]
 
