@@ -1,0 +1,44 @@
+[
+    {
+        "model": "stock.stock",
+        "pk": 1,
+        "fields": {
+            "ticker": "TSTA.US",
+            "company_name": "Test A Inc.",
+            "market_capitalization": 10000000000000000.00,
+            "dividend_yield": 10.00,
+            "eps": 12.45,
+            "pe": 32.00,
+            "pb": 4.00,
+            "de": 1.20
+        }
+    },
+    {
+        "model": "stock.stock",
+        "pk": 2,
+        "fields": {
+            "ticker": "TSTB.US",
+            "company_name": "Test B Inc.",
+            "market_capitalization": 1000000.00,
+            "dividend_yield": 0.00,
+            "eps": 12.45,
+            "pe": 32.00,
+            "pb": 4.00,
+            "de": 1.20
+        }
+    },
+    {
+        "model": "stock.stock",
+        "pk": 3,
+        "fields": {
+            "ticker": "TSTC.US",
+            "company_name": "Test C Inc.",
+            "market_capitalization": null,
+            "dividend_yield": null,
+            "eps": null,
+            "pe": null,
+            "pb": null,
+            "de": null
+        }
+    }
+]
