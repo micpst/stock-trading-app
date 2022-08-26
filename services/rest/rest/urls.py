@@ -17,10 +17,15 @@ Including another URLconf
 
 from django.contrib import admin
 from django.urls import include, path
-from rest_framework_swagger.views import get_swagger_view
+from drf_yasg.openapi import Info
+from drf_yasg.views import get_schema_view
+
+schema_view = get_schema_view(Info(title="REST API", default_version="v1"), public=True)
 
 urlpatterns = [
     path("admin", admin.site.urls),
-    path("docs", get_swagger_view(title="API"), name="docs"),
+    path("rest/docs", schema_view.with_ui("swagger", cache_timeout=0), name="docs"),
     path("rest/auth/", include("rest.app.user.urls")),
+    path("rest/stocks", include("rest.app.stock.urls")),
+    path("rest/tickers", include("rest.app.ticker.urls")),
 ]
