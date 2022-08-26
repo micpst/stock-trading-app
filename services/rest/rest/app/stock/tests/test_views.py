@@ -1,5 +1,6 @@
+from django.urls import reverse
 from parameterized import parameterized
-from rest_framework.status import HTTP_200_OK, HTTP_201_CREATED, HTTP_403_FORBIDDEN
+from rest_framework.status import HTTP_200_OK, HTTP_201_CREATED, HTTP_403_FORBIDDEN, HTTP_404_NOT_FOUND
 from rest_framework.test import APITestCase
 
 from rest.app.user.models import User
@@ -7,60 +8,35 @@ from rest.app.stock.models import Stock
 
 
 class StockListViewTests(APITestCase):
-    @classmethod
-    def setUpTestData(cls):
-        User.objects.create_superuser(
-            email="admin@email.com",
-            first_name="Test",
-            last_name="Test",
-            password="password",
-        )
-        User.objects.create_user(
-            email="test@email.com",
-            first_name="Test",
-            last_name="Test",
-            password="password",
-        )
-        Stock.objects.create(
-            ticker="TEST.US",
-            company_name="Test Company Inc.",
-        )
+    fixtures = ["test_users", "test_stocks"]
 
     @parameterized.expand([
-        (User.objects.get(id=1), HTTP_201_CREATED, 2),
-        (User.objects.get(id=2), HTTP_403_FORBIDDEN, 1),
+        (1, HTTP_201_CREATED, 4),
+        (2, HTTP_403_FORBIDDEN, 3),
     ])
-    def test_create_stock_with_valid_data(self, user, expected_status_code, expected_stock_count):
-        stock_data = {
-            "ticker": "VAL.US",
-            "company_name": "Value Company Inc.",
-        }
+    def test_create_stock_with_valid_data(self, user_id, expected_status_code, expected_stock_count):
+        user = User.objects.get(id=user_id)
+        url = reverse("stocks_list_create")
+        stock_data = {"ticker": "VAL.US", "company_name": "Value Company Inc."}
 
         self.client.force_authenticate(user=user)
-        response = self.client.post("/rest/stocks", stock_data)
+        response = self.client.post(url, stock_data)
 
         self.assertEqual(response.status_code, expected_status_code)
         self.assertEqual(Stock.objects.count(), expected_stock_count)
 
     @parameterized.expand([
-        (User.objects.get(id=1),),
-        (User.objects.get(id=2),),
+        (1, HTTP_200_OK),
+        (2, HTTP_200_OK),
+        (3, HTTP_200_OK),
+        (4, HTTP_404_NOT_FOUND),
     ])
-    def test_read_stock_data(self, user):
-        expected_response_data = {
-            "id": 1,
-            "ticker": "TEST.US",
-            "company_name": "Test Company Inc.",
-            "market_capitalization": "NA",
-            "dividend_yield": "NA",
-            "eps": "NA",
-            "pe": "NA",
-            "pb": "NA",
-            "de": "NA",
-        }
+    def test_read_stock_data(self, stock_id, expected_status_code):
+        user = User.objects.get(id=2)
+        kwargs = {"pk": stock_id}
+        url = reverse("stock_retrieve_update_delete", kwargs=kwargs)
 
         self.client.force_authenticate(user=user)
-        response = self.client.get("/rest/stocks/1")
+        response = self.client.get(url)
 
-        self.assertEqual(response.status_code, HTTP_200_OK)
-        self.assertEqual(response.data, expected_response_data)
+        self.assertEqual(response.status_code, expected_status_code)
