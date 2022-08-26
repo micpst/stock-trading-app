@@ -48,4 +48,4 @@ jobs:
       - name: Run tests
         if: ${{ steps.filter.outputs.python == 'true' }}
         working-directory: services/rest
-        run: python manage.py test
+        run: sudo python manage.py test
