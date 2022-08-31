@@ -4,8 +4,11 @@ from typing import Any
 from uuid import uuid4
 
 from django.contrib.auth.models import AbstractUser, BaseUserManager
-from django.db.models import CharField, EmailField, UUIDField
+from django.db.models import CharField, EmailField, OneToOneField, SET_NULL, UUIDField
 from django.utils.translation import gettext_lazy as _
+
+from rest.app.account.models import Account
+from rest.common.mixins import UpdateMixin
 
 
 class UserManager(BaseUserManager):
@@ -51,7 +54,7 @@ class UserManager(BaseUserManager):
         return self.create_user(email, password, **extra_fields)
 
 
-class User(AbstractUser):
+class User(AbstractUser, UpdateMixin):
     """
     Custom user model.
     """
@@ -61,6 +64,7 @@ class User(AbstractUser):
     first_name = CharField(_("first name"), max_length=150)
     last_name = CharField(_("last name"), max_length=150)
     public_id = UUIDField(default=uuid4, unique=True)
+    account = OneToOneField(to=Account, on_delete=SET_NULL, blank=True, null=True, related_name="+")
 
     objects = UserManager()
 

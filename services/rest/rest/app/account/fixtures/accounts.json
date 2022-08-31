@@ -1,0 +1,35 @@
+[
+    {
+        "model": "account.account",
+        "pk": 1,
+        "fields": {
+            "user": 2,
+            "type": "STANDARD",
+            "status": "ACTIVE",
+            "balance": "10000.0000",
+            "currency": "USD"
+        }
+    },
+    {
+        "model": "account.account",
+        "pk": 2,
+        "fields": {
+            "user": 2,
+            "type": "STANDARD",
+            "status": "ACTIVE",
+            "balance": "10000.0000",
+            "currency": "EUR"
+        }
+    },
+    {
+        "model": "account.account",
+        "pk": 3,
+        "fields": {
+            "user": 2,
+            "type": "STANDARD",
+            "status": "ACTIVE",
+            "balance": "10000.0000",
+            "currency": "PLN"
+        }
+    }
+]
