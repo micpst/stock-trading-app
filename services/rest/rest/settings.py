@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     "django.contrib.staticfiles",
     "drf_yasg",
     "rest_framework",
+    "rest.app.account",
     "rest.app.stock",
     "rest.app.ticker",
     "rest.app.user",
