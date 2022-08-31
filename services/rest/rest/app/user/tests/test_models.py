@@ -5,14 +5,7 @@ from rest.app.user.models import User
 
 
 class UserModelTest(TestCase):
-    @classmethod
-    def setUpTestData(cls):
-        User.objects.create_user(
-            email="test@email.com",
-            first_name="Test",
-            last_name="Test",
-            password="password",
-        )
+    fixtures = ["test_users"]
 
     @parameterized.expand([
         ("email", "email address"),

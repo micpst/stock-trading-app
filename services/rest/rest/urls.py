@@ -25,6 +25,7 @@ schema_view = get_schema_view(Info(title="REST API", default_version="v1"), publ
 urlpatterns = [
     path("admin", admin.site.urls),
     path("rest/docs", schema_view.with_ui("swagger", cache_timeout=0), name="docs"),
+    path("rest/accounts", include("rest.app.account.urls")),
     path("rest/auth/", include("rest.app.user.urls")),
     path("rest/stocks", include("rest.app.stock.urls")),
     path("rest/orders", include("rest.app.order.urls")),
