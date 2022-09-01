@@ -6,7 +6,7 @@ from rest.app.order.models import Order
 @register(Order)
 class OrderAdmin(ModelAdmin):
     list_display = (
-        "user",
+        "account",
         "stock",
         "type",
         "price",

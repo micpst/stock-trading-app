@@ -9,6 +9,7 @@ from rest_framework.status import HTTP_200_OK
 
 from rest.app.account.models import Account
 from rest.app.account.serializers import AccountSerializer
+from rest.app.user.permissions import IsOwner
 
 
 class AccountsListView(ListCreateAPIView):
@@ -28,11 +29,12 @@ class AccountDetailsView(RetrieveUpdateDestroyAPIView):
     Retrieves, updates and deletes Account model instance.
     """
 
-    permission_classes = (IsAuthenticated,)
+    permission_classes = (
+        IsAuthenticated,
+        IsOwner,
+    )
     serializer_class = AccountSerializer
-
-    def get_queryset(self) -> QuerySet:
-        return Account.objects.filter(user=self.request.user)
+    queryset = Account.objects.all()
 
 
 class AccountSelectView(GenericAPIView):
@@ -40,10 +42,11 @@ class AccountSelectView(GenericAPIView):
     Selects Account model instance for authenticated user.
     """
 
-    permission_classes = (IsAuthenticated,)
-
-    def get_queryset(self) -> QuerySet:
-        return Account.objects.filter(user=self.request.user)
+    permission_classes = (
+        IsAuthenticated,
+        IsOwner,
+    )
+    queryset = Account.objects.all()
 
     def post(self, request: Request, *args: Any, **kwargs: Any) -> Response:
         instance = self.get_object()

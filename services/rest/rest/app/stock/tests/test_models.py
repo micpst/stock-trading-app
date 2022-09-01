@@ -5,21 +5,10 @@ from rest.app.stock.models import Stock
 
 
 class StockModelTest(TestCase):
-    @classmethod
-    def setUpTestData(cls):
-        Stock.objects.create(
-            ticker="TEST.US",
-            company_name="Test Company Inc.",
-            market_capitalization=1_000_000_000_000.00,
-            dividend_yield=0.00,
-            eps=12.45,
-            pe=32.00,
-            pb=4.00,
-            de=1.20,
-        )
+    fixtures = ["test_stocks"]
 
     @parameterized.expand([
-        ("ticker", "ticker"),
+        ("symbol", "symbol"),
         ("company_name", "company name"),
         ("market_capitalization", "market capitalization"),
         ("dividend_yield", "dividend yield"),
@@ -34,7 +23,7 @@ class StockModelTest(TestCase):
         self.assertEqual(field_label, expected_label)
 
     @parameterized.expand([
-        ("ticker", 10),
+        ("symbol", 10),
         ("company_name", 255),
     ])
     def test_field_max_length(self, field_name, expected_max_length):
@@ -57,6 +46,6 @@ class StockModelTest(TestCase):
         self.assertEqual(max_digits, expected_max_digits)
         self.assertEqual(decimal_places, expected_decimal_places)
 
-    def test_object_name_is_ticker(self):
+    def test_object_name_is_symbol(self):
         stock = Stock.objects.get(id=1)
-        self.assertEqual(str(stock), stock.ticker)
+        self.assertEqual(str(stock), stock.symbol)
