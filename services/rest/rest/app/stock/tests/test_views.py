@@ -17,7 +17,7 @@ class StockListViewTests(APITestCase):
     def test_create_stock_with_valid_data(self, user_id, expected_status_code, expected_stock_count):
         user = User.objects.get(id=user_id)
         url = reverse("stocks_list_create")
-        stock_data = {"ticker": "VAL.US", "company_name": "Value Company Inc."}
+        stock_data = {"symbol": "VAL.US", "company_name": "Value Company Inc."}
 
         self.client.force_authenticate(user=user)
         response = self.client.post(url, stock_data)

@@ -3,9 +3,9 @@
         "model": "stock.stock",
         "pk": 1,
         "fields": {
-            "ticker": "AAPL.US",
+            "symbol": "AAPL.US",
             "company_name": "Apple Inc.",
-            "market_capitalization": 1_000_000_000_000.00,
+            "market_capitalization": 1000000000000.00,
             "dividend_yield": 0.00,
             "eps": 12.45,
             "pe": 32.00,
@@ -17,9 +17,9 @@
         "model": "stock.stock",
         "pk": 2,
         "fields": {
-            "ticker": "META.US",
+            "symbol": "META.US",
             "company_name": "Meta Platforms Inc.",
-            "market_capitalization": 1_000_000_000_000.00,
+            "market_capitalization": 1000000000000.00,
             "dividend_yield": 0.00,
             "eps": 12.45,
             "pe": 32.00,
@@ -31,7 +31,7 @@
         "model": "stock.stock",
         "pk": 3,
         "fields": {
-            "ticker": "GOOGL.US",
+            "symbol": "GOOGL.US",
             "company_name": "Alphabet Inc.",
             "market_capitalization": null,
             "dividend_yield": null,

@@ -6,7 +6,7 @@ class Stock(Model):
     Stock company information model.
     """
 
-    ticker = CharField(max_length=10, unique=True)
+    symbol = CharField(max_length=10, unique=True)
     company_name = CharField(max_length=255, unique=True)
     market_capitalization = DecimalField(null=True, blank=True, max_digits=19, decimal_places=2)
     dividend_yield = DecimalField(null=True, blank=True, max_digits=19, decimal_places=2)
@@ -19,4 +19,4 @@ class Stock(Model):
         db_table = "tbl_stock"
 
     def __str__(self) -> str:
-        return self.ticker
+        return self.symbol
