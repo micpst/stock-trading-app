@@ -1,0 +1,5 @@
+#!/bin/bash
+
+psql << EOF
+CREATE DATABASE $POSTGRES_DB_NAME;
+EOF
