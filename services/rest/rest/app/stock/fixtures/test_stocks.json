@@ -3,7 +3,7 @@
         "model": "stock.stock",
         "pk": 1,
         "fields": {
-            "ticker": "TSTA.US",
+            "symbol": "TSTA.US",
             "company_name": "Test A Inc.",
             "market_capitalization": 10000000000000000.00,
             "dividend_yield": 10.00,
@@ -17,7 +17,7 @@
         "model": "stock.stock",
         "pk": 2,
         "fields": {
-            "ticker": "TSTB.US",
+            "symbol": "TSTB.US",
             "company_name": "Test B Inc.",
             "market_capitalization": 1000000.00,
             "dividend_yield": 0.00,
@@ -31,7 +31,7 @@
         "model": "stock.stock",
         "pk": 3,
         "fields": {
-            "ticker": "TSTC.US",
+            "symbol": "TSTC.US",
             "company_name": "Test C Inc.",
             "market_capitalization": null,
             "dividend_yield": null,
