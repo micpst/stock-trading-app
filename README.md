@@ -50,5 +50,9 @@ $ ./scripts/stop.sh dev
 $ ./scripts/test.sh dev
 ```
 
+## 💡 Inspirations
+- [Design online stock brokerage system](https://github.com/tssovi/grokking-the-object-oriented-design-interview/blob/master/object-oriented-design-case-studies/design-an-online-stock-brokerage-system.md)
+- [Design stock exchange](https://www.grokkingsystemdesigns.com/design-stock-exchange/)
+
 ## 📄 License
 All my code is MIT licensed. Libraries follow their respective licenses.
