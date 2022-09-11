@@ -1,6 +1,5 @@
 from typing import Any
 
-from django.db.models import QuerySet
 from rest_framework.generics import GenericAPIView, ListCreateAPIView, RetrieveUpdateDestroyAPIView
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.request import Request
@@ -9,6 +8,7 @@ from rest_framework.status import HTTP_200_OK
 
 from rest.app.account.models import Account
 from rest.app.account.serializers import AccountSerializer
+from rest.app.user.filters import OwnerFilter
 from rest.app.user.permissions import IsOwner
 
 
@@ -17,11 +17,10 @@ class AccountsListView(ListCreateAPIView):
     Creates and lists Account model instances.
     """
 
+    filter_backends = (OwnerFilter,)
     permission_classes = (IsAuthenticated,)
     serializer_class = AccountSerializer
-
-    def get_queryset(self) -> QuerySet:
-        return Account.objects.filter(user=self.request.user)
+    queryset = Account.objects.all()
 
 
 class AccountDetailsView(RetrieveUpdateDestroyAPIView):

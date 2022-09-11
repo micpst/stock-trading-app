@@ -1,7 +1,7 @@
 from django.urls import path
 
-from rest.app.ticker.views import PriceTickersListView
+from rest.app.ticker.views import TickersListView
 
 urlpatterns = [
-    path("", PriceTickersListView.as_view(), name="price_tickers_list"),
+    path("", TickersListView.as_view(), name="tickers_list"),
 ]

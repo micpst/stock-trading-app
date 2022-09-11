@@ -3,7 +3,7 @@ from django.db.models import CASCADE, DateTimeField, DecimalField, ForeignKey, M
 from rest.app.stock.models import Stock
 
 
-class PriceTicker(Model):
+class Ticker(Model):
     """
     Stock price ticker model.
     """
@@ -13,4 +13,4 @@ class PriceTicker(Model):
     time_epoch = DateTimeField()
 
     class Meta:
-        db_table = "tbl_price_ticker"
+        db_table = "tbl_ticker"
