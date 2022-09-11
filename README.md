@@ -10,7 +10,7 @@ _Requires Python>=3.10, Node>=17, and yarn_
 Before you run this app, make sure you have Python and Node.js installed on your machine. You'll also need to run the Postgres database service to create a persistence layer. If you prefer to run everything inside a Docker container, see the 🐳 Docker Setup section.
 
 ### Run REST service
-From `services/rest` root directory run following commands:
+From `services/rest` directory run following commands:
 ```bash
 # Install dependencies
 $ pip install -r requirements-dev.txt
@@ -35,19 +35,28 @@ $ python manage.py runserver
 # Run tests with coverage
 $ coverage run manage.py test
 $ coverage report
-
 ```
+### Run client service
+From `services/client` directory run following commands:
+```bash
+# Install dependencies
+$ yarn
+
+# Run development server
+$ yarn run start
+```
+
 ## 🐳 Docker Setup
 
 ```bash
 # Initialize containers
-$ ./scripts/start.sh dev
-
-# Stop containers
-$ ./scripts/stop.sh dev
+$ ./docker/start.sh dev
 
 # Run tests
-$ ./scripts/test.sh dev
+$ docker exec dev-rest-1 python manage.py test
+
+# Stop containers
+$ docker compose -p dev down
 ```
 
 ## 💡 Inspirations
