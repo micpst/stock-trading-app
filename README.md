@@ -5,25 +5,21 @@
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
 ## 🛠️ Setup
-_Requires Python>=3.10, Node>=17, and yarn_
+_Requires Python>=3.11, Node>=17, and yarn_
 
 Before you run this app, make sure you have Python and Node.js installed on your machine. You'll also need to run the Postgres database service to create a persistence layer. If you prefer to run everything inside a Docker container, see the 🐳 Docker Setup section.
 
 ### Run REST service
 From `services/rest` directory run following commands:
 ```bash
-# Install dependencies
-$ pip install -r requirements-dev.txt
+# Start virtualenv
+$ pipenv shell
 
-# Export environment variables (adjust for database configuration)
-$ export DJANGO_DEBUG=True \
-         DJANGO_SECRET_KEY=dev-secret-key \
-         DJANGO_DB_NAME=app_db \
-         DJANGO_DB_TEST_NAME=test_db \
-         DJANGO_DB_USER=postgres \
-         DJANGO_DB_PASSWORD=postgres \
-         DJANGO_DB_HOST=localhost \
-         DJANGO_DB_PORT=5432
+# Install dependencies
+$ pipenv install --dev
+
+# Export environment variables
+$ . ./scripts/setup-env.sh dev
 
 # Apply migrations and populate the database
 $ python manage.py migrate
@@ -47,16 +43,19 @@ $ yarn run start
 ```
 
 ## 🐳 Docker Setup
-
+From project root run following commands:
 ```bash
 # Initialize containers
-$ ./docker/start.sh dev
+$ ./scripts/compose.sh dev up -d
 
-# Run tests
-$ docker exec dev-rest-1 python manage.py test
+# Verify running containers
+$ ./scripts/compose.sh dev ps
+
+# Run REST service tests
+$ ./scripts/compose.sh dev exec rest python manage.py test
 
 # Stop containers
-$ docker compose -p dev down
+$ ./scripts/compose.sh dev stop
 ```
 
 ## 💡 Inspirations

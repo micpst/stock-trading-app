@@ -96,13 +96,13 @@ WSGI_APPLICATION = "rest.wsgi.application"
 DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.postgresql_psycopg2",
-        "NAME": getenv("DJANGO_DB_NAME"),
-        "USER": getenv("DJANGO_DB_USER"),
-        "PASSWORD": getenv("DJANGO_DB_PASSWORD"),
-        "HOST": getenv("DJANGO_DB_HOST"),
-        "PORT": getenv("DJANGO_DB_PORT"),
+        "NAME": getenv("DB_NAME"),
+        "USER": getenv("DB_USER"),
+        "PASSWORD": getenv("DB_PASSWORD"),
+        "HOST": getenv("DB_HOST"),
+        "PORT": getenv("DB_PORT"),
         "TEST": {
-            "NAME": getenv("DJANGO_DB_TEST_NAME"),
+            "NAME": getenv("DB_TEST_NAME"),
         },
     }
 }

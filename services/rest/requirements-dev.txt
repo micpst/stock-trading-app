@@ -1,6 +1,0 @@
--r requirements.txt
-
-black==22.6.0
-flake8==4.0.1
-coverage==6.4.3
-parameterized==0.8.1
