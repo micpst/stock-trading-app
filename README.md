@@ -10,6 +10,14 @@ _Requires Python>=3.11, Node>=17, and yarn_
 Before you run this app, make sure you have Python and Node.js installed on your machine. You'll also need to run the Postgres database service to create a persistence layer. If you prefer to run everything inside a Docker container, see the 🐳 Docker Setup section.
 
 ### Run REST service
+From project root run following commands: 
+```bash
+# Change project configuration (if needed)
+$ vim config/.env.dev
+
+# Export environment variables
+$ . ./scripts/setup-env.sh dev
+```
 From `services/rest` directory run following commands:
 ```bash
 # Start virtualenv
@@ -17,9 +25,6 @@ $ pipenv shell
 
 # Install dependencies
 $ pipenv install --dev
-
-# Export environment variables
-$ . ./scripts/setup-env.sh dev
 
 # Apply migrations and populate the database
 $ python manage.py migrate

@@ -45,22 +45,20 @@ jobs:
         with:
           python-version: 3.11.0
           architecture: x64
-          cache: 'pip'
+          cache: 'pipenv'
 
       - name: Install pipenv
-        run: pip install pipenv
+        run: curl https://raw.githubusercontent.com/pypa/pipenv/master/get-pipenv.py | python
 
       - name: Install dependencies
         if: ${{ steps.filter.outputs.python == 'true' }}
         working-directory: services/rest
-        run: |
-          pipenv requirements --dev > requirements.txt && 
-          pip install -r requirements.txt
+        run: pipenv install --dev
 
       - name: Run flake8
         if: ${{ steps.filter.outputs.python == 'true' }}
         working-directory: services/rest
-        run: flake8
+        run: pipenv run flake8
 
       - name: Run tests
         if: ${{ steps.filter.outputs.python == 'true' }}
@@ -72,12 +70,12 @@ jobs:
           DB_HOST: localhost
           DB_PORT: 5432
         working-directory: services/rest
-        run: coverage run manage.py test
+        run: pipenv run coverage run manage.py test
 
       - name: Generate coverage report
         if: ${{ steps.filter.outputs.python == 'true' }}
         working-directory: services/rest
-        run: coverage xml
+        run: pipenv run coverage xml
 
       - name: Publish coverage report
         if: ${{ steps.filter.outputs.python == 'true' }}
