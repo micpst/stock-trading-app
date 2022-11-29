@@ -1,19 +1,31 @@
-name: CI/CD Workflow
+name: CI
 
 on:
   push:
     branches:
       - master
-      - develop
 
   pull_request:
     branches:
       - master
-      - develop
 
 jobs:
   health-check:
     runs-on: ubuntu-latest
+    services:
+      postgres:
+        image: postgres
+        env:
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: postgres
+        ports:
+          - "5432:5432"
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 5s
+          --health-timeout 5s
+          --health-retries 5
+
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
@@ -27,25 +39,46 @@ jobs:
             python:  
               - added|modified: "services/rest/**/*.py"
 
-      - name: Set up Python 3.10
+      - name: Set up Python 3.11
         if: ${{ steps.filter.outputs.python == 'true' }}
         uses: actions/setup-python@v4
         with:
-          python-version: 3.10.0
+          python-version: 3.11.0
           architecture: x64
-          cache: 'pip'
+          cache: 'pipenv'
+
+      - name: Install pipenv
+        run: curl https://raw.githubusercontent.com/pypa/pipenv/master/get-pipenv.py | python
 
       - name: Install dependencies
         if: ${{ steps.filter.outputs.python == 'true' }}
         working-directory: services/rest
-        run: pip install -r requirements-dev.txt
+        run: pipenv install --dev
 
       - name: Run flake8
         if: ${{ steps.filter.outputs.python == 'true' }}
         working-directory: services/rest
-        run: flake8
+        run: pipenv run flake8
 
       - name: Run tests
         if: ${{ steps.filter.outputs.python == 'true' }}
+        env:
+          DJANGO_SECRET_KEY: test-secret-key
+          DB_TEST_NAME: test_db
+          DB_USER: postgres
+          DB_PASSWORD: postgres
+          DB_HOST: localhost
+          DB_PORT: 5432
         working-directory: services/rest
-        run: python manage.py test
+        run: pipenv run coverage run manage.py test
+
+      - name: Generate coverage report
+        if: ${{ steps.filter.outputs.python == 'true' }}
+        working-directory: services/rest
+        run: pipenv run coverage xml
+
+      - name: Publish coverage report
+        if: ${{ steps.filter.outputs.python == 'true' }}
+        uses: codecov/codecov-action@v3
+        with:
+          files: services/rest/coverage.xml

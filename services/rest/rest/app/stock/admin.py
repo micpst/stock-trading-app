@@ -6,7 +6,7 @@ from rest.app.stock.models import Stock
 @register(Stock)
 class StockAdmin(ModelAdmin):
     list_display = (
-        "ticker",
+        "symbol",
         "company_name",
         "market_capitalization",
         "dividend_yield",

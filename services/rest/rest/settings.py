@@ -10,6 +10,7 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.0/ref/settings/
 """
 
+from os import getenv
 from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -20,10 +21,10 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/4.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = "django-insecure-^e1^mjblp^&vvue8o@1l!f1h1r9yta1--82+dgmv@i!!j)ue)v"
+SECRET_KEY = getenv("DJANGO_SECRET_KEY")
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = getenv("DJANGO_DEBUG", False)
 
 ALLOWED_HOSTS = []
 
@@ -42,6 +43,8 @@ INSTALLED_APPS = [
     "django.contrib.staticfiles",
     "drf_yasg",
     "rest_framework",
+    "rest.app.account",
+    "rest.app.order",
     "rest.app.stock",
     "rest.app.ticker",
     "rest.app.user",
@@ -94,8 +97,15 @@ WSGI_APPLICATION = "rest.wsgi.application"
 
 DATABASES = {
     "default": {
-        "ENGINE": "django.db.backends.sqlite3",
-        "NAME": BASE_DIR / "tmp" / "db.sqlite3",
+        "ENGINE": "django.db.backends.postgresql_psycopg2",
+        "NAME": getenv("DB_NAME"),
+        "USER": getenv("DB_USER"),
+        "PASSWORD": getenv("DB_PASSWORD"),
+        "HOST": getenv("DB_HOST"),
+        "PORT": getenv("DB_PORT"),
+        "TEST": {
+            "NAME": getenv("DB_TEST_NAME"),
+        },
     }
 }
 
@@ -156,11 +166,7 @@ SIMPLE_JWT = {
 
 SWAGGER_SETTINGS = {
     "SECURITY_DEFINITIONS": {
-        "Bearer": {
-            "type": "apiKey",
-            "in": "header",
-            "name": "Authorization"
-        }
+        "Bearer": {"type": "apiKey", "in": "header", "name": "Authorization"}
     },
     "USE_SESSION_AUTH": False,
 }
