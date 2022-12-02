@@ -31,7 +31,12 @@ const LogIn = () => {
                     alignItems: 'center',
                 }}
             >
-                <Box component="form" noValidate sx={{mt: 1}}>
+                <Box
+                    component="form"
+                    onSubmit={handleFormSubmit}
+                    noValidate
+                    sx={{mt: 1}}
+                >
                     <TextField
                         margin="normal"
                         required
